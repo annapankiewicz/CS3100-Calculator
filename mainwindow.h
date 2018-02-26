@@ -17,6 +17,19 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void digitClicked();
+    void operatorClicked();
+    void equalClicked();
+    void historyBack();
+    void historyForward();
+    void backspaceClicked();
+    void clear();
+    void on_pushButton_decimal_released();
+    void unary_operation_pressed();
+    void on_pushButton_clear_released();
+    void on_pushButton_equals_released();
 };
 
 #endif // MAINWINDOW_H
