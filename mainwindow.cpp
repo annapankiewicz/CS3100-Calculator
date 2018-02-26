@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <cmath>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    setWindowTitle(tr("Calculator"));
 
     connect(ui->pushButton_0,SIGNAL(released()),this,SLOT(digitClicked()));
     connect(ui->pushButton_1,SIGNAL(released()),this,SLOT(digitClicked()));
@@ -19,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButton_9,SIGNAL(released()),this,SLOT(digitClicked()));
 
     connect(ui->pushButton_plusminus,SIGNAL(released()),this,SLOT(unary_operation_pressed()));
+    connect(ui->pushButton_recip,SIGNAL(released()),this,SLOT(unary_operation_pressed()));
+    connect(ui->pushButton_squared,SIGNAL(released()),this,SLOT(unary_operation_pressed()));
+    connect(ui->pushButton_sqrt,SIGNAL(released()),this,SLOT(unary_operation_pressed()));
 
     connect(ui->pushButton_plus,SIGNAL(released()),this,SLOT(operatorClicked()));
     connect(ui->pushButton_minus,SIGNAL(released()),this,SLOT(operatorClicked()));
@@ -87,6 +93,27 @@ void MainWindow::unary_operation_pressed()
     {
         labelNumber = ui->label->text().toDouble();
         labelNumber = labelNumber * -1;
+        newLabel = QString::number(labelNumber, 'g', 15);
+        ui->label->setText(newLabel);
+    }
+    else if (button->text() == "1/x")
+    {
+        labelNumber = ui->label->text().toDouble();
+        labelNumber = 1/labelNumber;
+        newLabel = QString::number(labelNumber, 'g', 15);
+        ui->label->setText(newLabel);
+    }
+    else if (button->text() == "x²")
+    {
+        labelNumber = ui->label->text().toDouble();
+        labelNumber = labelNumber*labelNumber;
+        newLabel = QString::number(labelNumber, 'g', 15);
+        ui->label->setText(newLabel);
+    }
+    else if (button->text() == "sqrt")
+    {
+        labelNumber = ui->label->text().toDouble();
+        labelNumber = sqrt(labelNumber);
         newLabel = QString::number(labelNumber, 'g', 15);
         ui->label->setText(newLabel);
     }
